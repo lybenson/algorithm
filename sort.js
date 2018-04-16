@@ -9,7 +9,6 @@ function bubbleSort(arr) {
   console.log(arr);
   var len = arr.length;
   for (var i = 0; i < len; i++) {
-    console.log(`第${i}轮`); 
     for (var j = 0; j < len - 1; j++) {
       if (arr[j] > arr[j+1]) { // 升序
         var temp = arr[j+1];
