@@ -6,15 +6,14 @@
  * 4. 持续每次对越来越少的元素重复上面的步骤，直到没有任何一对数字需要比较
  */
 function bubbleSort(arr) {
-  console.log(arr);
   var len = arr.length;
   for (var i = 0; i < len; i++) {
-    for (var j = 0; j < len - 1; j++) {
+    console.log(`第${i}轮`)
+    for (var j = 0; j < len - 1 - i; j++) {
       if (arr[j] > arr[j+1]) { // 升序
         var temp = arr[j+1];
         arr[j+1] = arr[j];
         arr[j] = temp;
-        console.log(arr)
       }
     }
   }
@@ -25,11 +24,34 @@ function bubbleSort(arr) {
  * 快速排序
  * 1. 选定一个合适的值
  * 2. 基于这个值，将数组分为两部分，较小的分在左边，较大的分在右边
- * 3. 
+ * 3. 不断重复第一步和第二步，直到所有子集只剩下一个元素为止
  */
-function quickSort(arr) {
-  
+function quickSort(arr, left, right) {
+  if (left < right) {
+    var x = arr[right], i = left - 1, temp;
+    for (var j = left; j <= right; j++) {
+      if (arr[j] <= x) {
+        i++;
+        temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+      }
+    }
+    quickSort(arr, left, i - 1);
+    quickSort(arr, i + 1, right);
+  }
+　return arr;
 }
 
+// 选择排序
+
+// 希尔排序
+
+// 堆排序
+
+// 桶排序
+
+
 var arr = [10, 6, 89, 1, 5, 5, 19];
-console.log(bubbleSort(arr))
+console.log(`冒泡排序: ${bubbleSort(arr)}`)
+console.log(`快速排序: ${quickSort(arr, 0, arr.length - 1)}`)
