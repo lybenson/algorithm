@@ -14,6 +14,8 @@
 // 中序遍历: 左子树 ---> 根结点 ---> 右子树 
 // 后序遍历: 左子树 ---> 右子树 ---> 根结点
 
+// 获取最值
+// 最小值总是在左节点上，最大值总是在右节点上
 
 // 二叉树的节点类
 function Node (data, left, right) {
@@ -30,35 +32,123 @@ function Node (data, left, right) {
 function BST () {
   this.root = null
   this.insert = insert // 插入节点
-  this.inOrder = inOrder // 中序遍历
+  this.inOrderTraverse = inOrderTraverse // 中序遍历
+  this.preOrderTraverse = preOrderTraverse // 先序遍历
+  this.postOrderTraverse = postOrderTraverse // 后序遍历
+  this.max = max // 获取最大值
+  this.min = min // 获取最小值
+  this.search = search // 查找指定值
 
   function insert (data) {
     let newNode = new Node(data, null, null)
     if (!this.root) {
       this.root = newNode
     } else {
-      insertNode(root, newNode)
+      insertNode(this.root, newNode)
     }
   }
 
   function insertNode (node, newNode) {
-    if (newNode.key < node.key) {
+    if (newNode.data < node.data) {
       if (node.left === null) {
-        node.left = newNode;
+        node.left = newNode
       } else {
         insertNode(node.left, newNode)
       }
     } else {
       if (node.right === null) {
-        node.right = newNode;
+        node.right = newNode
       } else {
-        insertNode(node.right, newNode);
+        insertNode(node.right, newNode)
       }
     }
   }
 
-  function inOrder () {
-    
+  function inOrderTraverse () {
+    inOrderTraverseNode(this.root)
+  }
+  function inOrderTraverseNode(node) {
+    if (node !== null) {
+      inOrderTraverseNode(node.left)
+      console.log(node.show())
+      inOrderTraverseNode(node.right)
+    } 
+  }
+
+  function preOrderTraverse () {
+    preOrderTraverseNode(this.root)
+  }
+  function preOrderTraverseNode (node) {
+    if (node !== null) {
+      console.log(node.show())
+      preOrderTraverseNode(node.left)
+      preOrderTraverseNode(node.right)
+    }
+  }
+
+  function postOrderTraverse () {
+    postOrderTraverseNode(this.root)
+  }
+  function postOrderTraverseNode (node) {
+    if (node !== null) {
+      postOrderTraverseNode(node.left)
+      postOrderTraverseNode(node.right)
+      console.log(node.show())
+    }
+  }
+
+  function max () {
+    return maxNode(this.root)
+  }
+  function maxNode (node) {
+    if (node) {
+      while (node && node.right !== null) {
+        node = node.right
+      }
+      return node.data
+    }
+  }
+
+  function min () {
+    return minNode(this.root)
+  }
+  function minNode (node) {
+    if (node) {
+      while (node && node.left !== null) {
+        node = node.left
+      }
+      return node.data
+    }
+  }
+
+  function search (data) {
+    return searchNode(this.root, data)
+  }
+  function searchNode (node, data) {
+    if (!node) {
+      return false
+    }
+    if (data < node.data) {
+      return searchNode(node.left, data)
+    } else if (data > node.data) {
+      return searchNode(node.right, data)
+    } else {
+      return true
+    }
   }
 }
 
+
+const nodes = [8, 3, 10, 1, 6, 14, 4, 7, 13]
+
+let bst = new BST();
+nodes.forEach(function (key) {
+  bst.insert(key)
+})
+
+bst.inOrderTraverse()
+bst.preOrderTraverse()
+bst.postOrderTraverse()
+
+let isExist = bst.search(3)
+console.log(isExist)
