@@ -24,6 +24,36 @@
  * @return {ListNode}
  */
 var addTwoNumbers = function(l1, l2) {
+  // 创建链表作为返回值
+  let res = new ListNode(0)
 
+  let temp = res
+  // 进位
+  let carryBit = 0
+  while(l1 || l2) {
+    // 取链表节点值
+    let n1 = l1 ? l1.val : 0
+    let n2 = l2 ? l2.val : 0
+
+    // 值相加
+    let sum = n1 + n2 + carryBit
+
+    // 相加结果大于10, 进位取1
+    carryBit = sum >= 10 ? 1 : 0
+    temp.next = new ListNode(sum % 10)
+    temp = res.next
+
+    l1 = l1 ? l1.next : l1
+    l2 = l2 ? l2.next : l2
+  }
+  if (carryBit === 1) {
+    temp.next = new ListNode(1)
+  }
+  return res.next
 };
 
+
+function ListNode(val) {
+  this.val = val;
+  this.next = null;
+}
