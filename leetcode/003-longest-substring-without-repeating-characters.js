@@ -15,6 +15,19 @@
  * @return {number}
  */
 var lengthOfLongestSubstring = function(s) {
-  
+    let size = 0 // 用于存放当前最长无重复子串的长度
+    let str = '' // 用于存放无重复子串
+    const len = s.length;
+    for(let i = 0; i < len; i++) {
+      let char = s.charAt(i)
+      var index = str.indexOf(char)
+      if(index === -1) {
+        str += char
+        size = size < str.length ? str.length : size
+      } else {
+        str = str.substr(index + 1) + char
+      }
+    }
+    return size
 };
  
