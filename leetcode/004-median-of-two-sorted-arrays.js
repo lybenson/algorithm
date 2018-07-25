@@ -16,3 +16,22 @@ nums2 = [3, 4]
 
 中位数是 (2 + 3)/2 = 2.5
 */
+
+/**
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number}
+ */
+var findMedianSortedArrays = function(nums1, nums2) {
+    let nums = nums1.concat(nums2).sort((a, b) => a - b)
+    let res
+    if (nums.length % 2 == 0) {
+      res = (nums[parseInt((nums.length - 1) / 2)] + nums[parseInt((nums.length - 1) / 2 + 1)]) / 2
+    } else {
+      res = nums[parseInt(nums.length / 2)]
+    }
+    return res
+};
+let s = findMedianSortedArrays([1, 3], [2])
+
+console.log(s)
