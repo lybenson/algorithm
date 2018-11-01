@@ -6,6 +6,8 @@
  * @param {number[]} nums
  * @return {number}
  */
+
+//  贪心算法实现
 var triangleNumber = function(nums) {
   // 两边之和大于第三边
   nums.sort((a, b) => b - a)
