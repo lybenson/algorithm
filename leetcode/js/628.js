@@ -7,7 +7,29 @@
  * @return {number}
  */
 var maximumProduct = function(nums) {
-  nums.sort((a, b) => b - a)
-  let len = nums.length
-  return Math.max(nums[0] * nums[1] * nums[2], nums[0] * nums[len - 1] * nums[len - 2])
-};
+  let min1 = Number.MAX_VALUE
+  let min2 = Number.MAX_VALUE
+  let max1 = -Number.MAX_VALUE
+  let max2 = -Number.MAX_VALUE
+  let max3 = -Number.MAX_VALUE
+  for (let i = 0; i < nums.length; i++) {
+      let n = nums[i]
+      if (n < min1) {
+          min2 = min1
+          min1 = n
+      } else if (n < min2) {
+          min2 = n
+      }
+      if (n > max3) {
+          max1 = max2
+          max2 = max3
+          max3 = n
+      } else if (n > max2) {
+          max1 = max2
+          max2 = n
+      } else if (n > max1) {
+          max1 = n
+      }
+  }
+  return Math.max(min1 * min2 * max3, max1 * max2 * max3)
+}
