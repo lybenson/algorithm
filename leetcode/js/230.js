@@ -14,15 +14,24 @@
  * @return {number}
  */
 function kthSmallest(root, k) {
-  return getOrderedArray(root)[k - 1];
-}
-
-function getOrderedArray(node) {
-  if (!node) return [];
-
-  return [
-    ...getOrderedArray(node.left),
-    node.val,
-    ...getOrderedArray(node.right)
-  ];
+  let seq, el
+    
+  seq = 0
+  el = null
+  
+  traverse(root)
+  
+  return el
+  
+  function traverse(node) {
+    if (node === null || el !== null) {
+      return
+    }
+    traverse(node.left)
+    seq++
+    if (seq === k) {
+      el = node.val
+    }
+    traverse(node.right)
+  }
 }
