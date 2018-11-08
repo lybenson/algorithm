@@ -6,6 +6,7 @@
  * @param {string[]} words
  * @return {number}
  */
+
 var numMatchingSubseq = function(S, words) {
   let pos = {}
 
@@ -29,14 +30,16 @@ var numMatchingSubseq = function(S, words) {
     if (word.length == 0) return false
     let prev = -1
     for (let i = 0; i < word.length; i++) {
-      let position = pos[word[i]]
-      position = position.filter(p => {
-        return p >= prev + 1
-      })
-
-      if (position.length > 0) {
-        let index = position[0]
-        prev = index
+      let position = pos[word[i]] || []
+      let min = -1
+      for (let j = 0; j < position.length; j++) {
+        if (position[j] >= prev + 1) {
+          min = position[j]
+          break
+        }
+      }
+      if (min !== -1) {
+        prev = min
       } else {
         return false
       }
@@ -45,4 +48,3 @@ var numMatchingSubseq = function(S, words) {
   }
 };
 
-console.log(numMatchingSubseq('absss', ['bssssaaa']))
