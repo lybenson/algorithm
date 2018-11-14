@@ -13,15 +13,11 @@
  * @return {string}
  */
 var shortestCompletingWord = function(licensePlate, words) {
-  let l = licensePlate.replace(/[^a-z]/gi, '').toLowerCase().split('').sort()
-
-  console.log(l)
-
-  let arr = {}
-  l.forEach(s => {
-    arr[s] = arr[s] ? ++arr[s] : 1
+  let lowS = licensePlate.replace(/[^a-z]/gi, '').toLowerCase().split('').sort()
+  let lowSHash = {}
+  lowS.forEach(s => {
+    lowSHash[s] = lowSHash[s] ? ++lowSHash[s] : 1
   })
-
   let min = Number.MAX_VALUE
   let ans
 
@@ -35,10 +31,14 @@ var shortestCompletingWord = function(licensePlate, words) {
   return ans
 
   function matches (word) {
-    let c = licensePlate.toLowerCase().split('').sort()
-    console.log(c)
+    let w = word.toLowerCase().split('').sort()
+    let wHash = {}
+    w.forEach(s => {
+      wHash[s] = wHash[s] ? ++wHash[s] : 1
+    })
+    for (const char in lowSHash) {
+      if (lowSHash[char] > (wHash[char] || 0)) return false
+    }
     return true
   }
 }
-
-shortestCompletingWord('1s3 PSt', ["step", "steps", "stripe", "stepple"])
