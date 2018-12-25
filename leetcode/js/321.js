@@ -13,30 +13,25 @@
  */
 var maxNumber = function(nums1, nums2, k) {
   let ans = []
-  let len1 = nums1.length
-  let len2 = nums2.length
-  for (let k1 = 0; k1 <= k; k1++) {
-    let k2 = k - k1
-    if (k1 > len1 || k2 > len2) continue
-    ans = max(ans, maxNumberCombine(
-      maxNumberSingle(nums1, k1),
-      maxNumberSingle(nums2, k2)
-    ))
-  }
-  return ans.filter(x => x !== undefined)
+  for (let i = Math.max(0, k - nums2.length); i <= Math.min(k, nums1.length); ++i) {
+    ans = max(ans, 0, maxNumberCombine(maxNumberSingle(nums1, i), 
+    maxNumberSingle(nums2, k - i)), 0)
+  }         
+  return ans
 
   // 数组中取k个最大的元素
   function maxNumberSingle (nums, k) {
     let ans = []
-    if (k == 0) return ans
-    let pop_num = nums.length - k
-    nums.forEach((num, i) => {
-      while (ans.length > 0 && num > ans[ans.length - 1] && pop_num--> 0) {
-        ans.pop()
+    let j = 0;
+    for (let i = 0; i < nums.length; i++) {
+      while (j > 0 && nums[i] > ans[j - 1] && nums.length - i > k - j) {
+        --j
       }
-      ans.push(num)
-    })
-    return ans.slice(0, k)
+      if (j < k) {
+        ans[j++] = nums[i]
+      }
+    }        
+    return ans
   }
 
   // 组合两个数组，保证顺序且数最大
@@ -44,44 +39,24 @@ var maxNumber = function(nums1, nums2, k) {
     console.log(nums1);
     console.log(nums2);
     let ans = []
-    while (nums1.length > 0 || nums2.length > 0) {
-      if (nums1.length == 0 || nums2.length == 0) {
-        if (nums1.length == 0) {
-          ans.push(nums2[0])
-          nums2.shift()
-        }
-        if (nums2.length == 0) {
-          ans.push(nums1[0])
-          nums1.shift()
-        }
-      } else {
-      if (nums1[0] > nums2[0]) {
-          ans.push(nums1[0])
-          nums1.shift()
-        } else if (nums1[0] < nums2[0]) {
-          ans.push(nums2[0])
-          nums2.shift()
-        } else {
-          // 相同，比较后一个元素
-          if (nums1[1] > nums2[1]) {
-            ans.push(nums1[0])
-            nums1.shift()
-          } else {
-            ans.push(nums2[0])
-            nums2.shift()
-          }
-        }     
-      }
+    let s1 = 0
+    let s2 = 0
+    let index = 0
+    while (s1 !== nums1.length || s2 !== nums2.length) {
+      ans[index++] = max(nums1, s1, nums2, s2) == nums1 ? nums1[s1++] : nums2[s2++]
     }
     return ans
   }
 
   // 比较两个数组的大小
-  function max (nums1, nums2) {
-    if (nums1.length == 0) return nums2
-    if (nums2.length == 0) return nums1
-    let max_nums = Math.max(Number(nums1.join('')), Number(nums2.join('')))
-    return String(max_nums).split('').map(n => parseInt(n))
+  function max (nums1, s1, nums2, s2) {
+    for (let i = s1; i < nums1.length; i++) {
+      let j = s2 + i - s1
+      if (j >= nums2.length) return nums1
+      if (nums1[i] < nums2[j]) return nums2
+      if (nums1[i] > nums2[j]) return nums1
+    }
+    return nums2
   }
 }
 
