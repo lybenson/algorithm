@@ -21,7 +21,7 @@ var splitArray = function(nums, m) {
     maxArr[index + 1] = maxArr[index] + num
   })
   for(let i = 0; i <= m; i++) {
-    dp[i]=[]
+    dp[i] = []
     for(let j = 0; j <= len; j++) {
       dp[i][j] = maxArr[maxArr.length-1]
     }
@@ -35,5 +35,7 @@ var splitArray = function(nums, m) {
       }
     }
   }
+  console.log(dp)
   return dp[m][len]
 }
+splitArray([7,2,5,10,8], 2)
