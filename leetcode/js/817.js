@@ -18,11 +18,11 @@
  * @return {number}
  */
 var numComponents = function(head, G) {
+  let newG = new Set(G)
   let ans = 0
   while (head) {
-    if (G.indexOf(head.val) !== -1 && (!head.next || G.indexOf(head.next.val) === -1)) {
+    if (newG.has(head.val) && (!head.next || !newG.has(head.next.val))) {
       ans++
-      console.log(!head.next ? 'true': 'false')
     }
     head = head.next
   }
