@@ -25,7 +25,7 @@ function Node (data, left, right) {
   this.show = show // 返回节点值
 
   function show () {
-    return this.data
+		return this.data
   }
 }
 
