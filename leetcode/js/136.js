@@ -3,12 +3,16 @@
 
 说明：
 
-你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？
+你的算法应该具有线性时间复杂度(On)。 你可以不使用额外空间来实现吗？
  */
 /**
  * @param {number[]} nums
  * @return {number}
  */
 var singleNumber = function(nums) {
-  
+  let ans = 0
+  for (let i = 0; i < nums.length; i++) {
+    ans = ans ^ nums[i]
+  }
+  return ans
 };
