@@ -15,11 +15,11 @@ var canConstruct = function(ransomNote, magazine) {
     if (map.get(c) > 0) {
       map.set(c, map.get(c) + 1)
     } else {
-      map.set(c) = 1
+      map.set(c, 1)
     }
   }
   for (let j = 0; j < ransomNote.length; j++) {
-    let c = ransomNote[i]
+    let c = ransomNote[j]
     if (map.get(c) > 0) {
       map.set(c, map.get(c) - 1)
     } else {
