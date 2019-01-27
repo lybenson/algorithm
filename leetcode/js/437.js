@@ -31,10 +31,8 @@ var pathSum = function(root, sum) {
     if (node.val === remind) {
       res += 1
     }
-    if (remind - node.val >= 0) {
-      res += dfs(node.left, remind - node.val)
-      res += dfs(node.right, remind - node.val)
-    }
+    res += dfs(node.left, remind - node.val)
+    res += dfs(node.right, remind - node.val)
     return res
   }
   return ans
