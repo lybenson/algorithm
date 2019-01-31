@@ -13,8 +13,7 @@ var findDisappearedNumbers = function(nums) {
   nums = nums.sort((a, b) => a - b)
   let ans = []
 
-  let maxNum = nums[nums.length - 1]
-  for (let i = 1; i <= maxNum; i++) {
+  for (let i = 1; i <= nums.length; i++) {
     if (nums.indexOf(i) === -1) {
       ans.push(i)
     }
