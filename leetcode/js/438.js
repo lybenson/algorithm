@@ -9,16 +9,36 @@
  * @return {number[]}
  */
 var findAnagrams = function(s, p) {
-  if (p.length > s.length) return []
+  const { length: m } = s
+  const { length: n } = p
 
-  let ans = []
+  const ans = []
 
-  let start = 0
-  let end = p.length
+  const diff = new Map()
+  for (const ch of p) diff.set(ch, (diff.get(ch) | 0) - 1)
+  
+  for (let i = 0; i < m; i += 1) {
+    const added = s[i]
 
-  let len = s.length - p.length + 1
-  for (let i = 0; i < len; i++) {
-    let str = s.splice(start, end)
-    
+    if (diff.get(added) === -1) {
+      diff.delete(added)
+    } else {
+      diff.set(added, (diff.get(added) | 0) + 1)
+    }
+
+    if (i >= n) {
+      const removed = s[i - n]
+      if (diff.get(removed) === 1) {
+        diff.delete(removed)
+      } else {
+        diff.set(removed, (diff.get(removed) | 0) - 1)
+      }
+    }
+
+    if (diff.size === 0) ans.push(i - n + 1)
   }
+
+  return ans
 };
+
+findAnagrams('cbaebabacd', 'abca')
