@@ -9,25 +9,8 @@
  * @param {number} minutesToTest
  * @return {number}
  */
-var islandPerimeter = function(grid) {
-  let ans = 0
-  for(let i = 0; i < grid.length; i++){
-    for(let j = 0; j < grid[i].length; j++){
-      if (grid[i][j] === 1) {
-        if(i === 0 || grid[i-1][j] !== 1){
-          ans += 1
-        }
-        if(i === grid.length-1 || grid[i+1][j] !== 1){
-          ans += 1
-        }
-        if(j === 0 || grid[i][j-1] !== 1){
-          ans += 1
-        }
-        if(j === grid[i].length-1 || grid[i][j+1] !== 1){
-          ans += 1
-        }
-      }
-    }
-  }
+var poorPigs = function(buckets, minutesToDie, minutesToTest) {
+  let decimal  = minutesToTest / minutesToDie + 1
+  let ans = Math.ceil(Math.log(buckets) / Math.log(decimal))
   return ans
 };
