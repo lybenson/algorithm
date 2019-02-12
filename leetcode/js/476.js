@@ -6,5 +6,9 @@
  * @return {number}
  */
 var findComplement = function(num) {
-  return parseInt(num.toString(2).replace(/1/g, 'x').replace(/0/g, '1').replace(/x/g, 0), 2).toString(10)
+  let mask = ~0
+  while (num & mask) {
+    mask <<= 1 
+  }
+  return ~mask ^ num
 };
