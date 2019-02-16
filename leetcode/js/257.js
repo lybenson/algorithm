@@ -7,20 +7,19 @@
  * @return {string[]}
  */
 var binaryTreePaths = function(root) {
-  let res = []
-  if (!root) return res
-  if (!root.left && !root.right) {
-    res.push(root.val)
-    return res
-  }
-  let leftPaths = binaryTreePaths(root.left)
-  for (let i = 0; i < leftPaths.length; i++) {
-    res.push(root.val + '->' + leftPaths[i])
-  }
-  let rightPaths = binaryTreePaths(root.right)
-  for (let i = 0; i < rightPaths.length; i++) {
-    res.push(root.val + '->' + rightPaths[i])
-  }
+  let ans = []
 
-  return res
+  dfs(node, '')
+  return ans
+
+  function dfs (node, path) {
+    if (!node) return
+
+    if (!node.left && !node.right) {
+      ans.append(path + node.val)
+    } else {
+      dfs(node.left, path + node.val + '->')
+      dfs(node.right, path + node.val + '->')
+    }
+  }
 };
