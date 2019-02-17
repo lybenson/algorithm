@@ -15,7 +15,7 @@ var findLUSlength = function(a, b) {
     [a, b] = [b, a]
   }
 
-  let ans = 0
+  let ans = -1
 
   let len = a.length
   for (let i = 0; i < len; i++) {
