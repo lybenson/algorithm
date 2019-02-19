@@ -24,5 +24,5 @@ var diameterOfBinaryTree = function(root) {
     return Math.max(leftDepth, rightDepth) + 1
   }
   traverse(root)
-  return ans
+  return ans - 1
 };
