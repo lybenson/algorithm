@@ -12,14 +12,15 @@
  */
 var repeatedStringMatch = function(A, B) {
   let ans = 1
+  let orignA = A
   while (A.length < B.length) {
-    A += A
+    A += orignA
     ans++
   }
   if (A.indexOf(B) !== -1) {
     return ans
   }
-  A += A
+  A += orignA
   if (A.indexOf(B) !== -1) {
     return ans + 1
   }
