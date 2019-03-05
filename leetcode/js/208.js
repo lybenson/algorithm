@@ -6,7 +6,7 @@
  */
 var Trie = function() {
   this.is_word = false
-  this.children = []
+  this.children = {}
 };
 
 /**
