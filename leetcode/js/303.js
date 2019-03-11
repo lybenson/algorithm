@@ -6,6 +6,12 @@
  */
 var NumArray = function(nums) {
   this.nums = nums
+  this.sums = []
+  this.sums[0] = nums[0]
+  let len = nums.length
+  for (let i = 1; i < len; i++) {
+    this.sums[i] = this.sums[i - 1] + this.nums[i]
+  }
 };
 
 /** 
@@ -14,12 +20,8 @@ var NumArray = function(nums) {
  * @return {number}
  */
 NumArray.prototype.sumRange = function(i, j) {
-  return nums.reduce((total, num, index) => {
-    if (index >= i && index <= j) {
-      return total + num
-    }
-    return total
-  }, 0)
+  if (i === 0) return this.sums[j]
+  return this.sums[j] - this.sums[i - 1]
 };
 
 /** 
