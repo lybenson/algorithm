@@ -18,5 +18,5 @@
  * @return {string[][]}
  */
 var findLadders = function(beginWord, endWord, wordList) {
-    
+  
 };
