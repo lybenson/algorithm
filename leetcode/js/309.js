@@ -13,14 +13,14 @@
 var maxProfit = function(prices) {
   let hold = []
   let sell = []
-  let cool = []
+  let rest = []
   hold[0] = -prices[0]
   sell[0] = 0
-  cool[0] = 0
+  rest[0] = 0
   for (let i = 1; i < prices.length; i++) {
     sell[i] = hold[i - 1] + prices[i]
-    hold[i] = Math.max(cool[i - 1] - prices[i], hold[i - 1])
-    cool[i] = Math.max(cool[i - 1], sell[i - 1])
+    hold[i] = Math.max(rest[i - 1] - prices[i], hold[i - 1])
+    rest[i] = Math.max(rest[i - 1], sell[i - 1])
   }
-  return Math.max(cool[cool.length - 1], sell[sell.length - 1])
+  return Math.max(rest[rest.length - 1], sell[sell.length - 1])
 }
