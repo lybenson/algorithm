@@ -10,14 +10,25 @@
  * @return {number}
  */
 var deleteAndEarn = function(nums) {
-  let arr = new Array(10001).fill(0)
-  for (let i = 0; i < nums.length; i++) {
-    ++arr[nums[i]]
+  if (nums.length === 0) return 0
+  nums = nums.sort((a, b) => a - b)
+
+  let min = nums[0]
+  let max = nums[nums.length - 1]
+  let points = new Array(max - min + 1).fill(0)
+  for (const num of nums) {
+    points[num - min] += num
   }
-  let dp = new Array(arr.length + 1).fill(0)
-  dp[1] = arr[1] * 1
-  for (let i = 2; i < 10000; i++) {
-    dp[i] = Math.max(dp[i-1],dp[i-2]+arr[i]*i)
+  return getAnswer(points)
+
+  function getAnswer (nums) {
+    let dp1 = 0
+    let dp2 = 0
+    for (let i = 0; i < nums.length; i++) {
+      let dp = Math.max(dp2 + nums[i], dp1)
+      dp2 = dp1
+      dp1 = dp
+    }
+    return dp1
   }
-  return dp[10000]
 };
