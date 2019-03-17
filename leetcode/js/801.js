@@ -13,6 +13,7 @@
  * @return {number}
  */
 var minSwap = function(A, B) {
+  // two status: keep or swap
   let len = A.length
   let keep = new Array(len).fill(Number.MAX_VALUE)
   let swap = new Array(len).fill(Number.MAX_VALUE)
