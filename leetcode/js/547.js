@@ -9,17 +9,19 @@
  */
 var findCircleNum = function(M) {
   if (M.length === 0) return 0
-  let len = M.lenght
+  let len = M.length
   let ans = 0
   for (let i = 0; i < len; i++) {
-    if (M[i][i] === 1) ans++
+    if (!M[i][i]) continue
+    ans++
     dfs(i)
   }
   return ans
 
   function dfs(i) {
     for (let j = 0; j < len; j++) {
-      if (M[i][j] === 1) M[i][j] = M[j][i] = 0
+      if (!M[i][j]) continue
+      M[i][j] = M[j][i] = 0
       dfs(j)
     }
   } 
