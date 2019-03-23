@@ -13,20 +13,16 @@ var numIslands = function(grid) {
   let ans = 0
   for (let y = 0; y < m; y++) {
     for (let x = 0; x < n; x++) {
-      if (grid[y][x] === '1') {
-        ans++
-        dfs(x, y)        
+      if (grid[y][x] === 1) {
+        ans = Math.max(dfs(x, y), ans)
       }
     }
   }
   return ans
 
   function dfs(x, y) {
-    if (x < 0 || y < 0 || x >= n || y >= m || grid[y][x] === '0') return
-    grid[y][x] = '0'
-    dfs(x + 1, y)
-    dfs(x - 1, y)
-    dfs(x, y + 1)
-    dfs(x, y - 1)
+    if (x < 0 || y < 0 || x >= n || y >= m || grid[y][x] === 0) return 0
+    grid[y][x] = 0
+    return dfs(x + 1, y) + dfs(x - 1, y) + dfs(x, y + 1) + dfs(x, y - 1) + 1
   }
 };
