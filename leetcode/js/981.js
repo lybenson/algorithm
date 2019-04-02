@@ -15,37 +15,65 @@
  * Initialize your data structure here.
  */
 var TimeMap = function() {
-  this.map = new Map()
-};
+  this.map = {}
+}
 
 /** 
- * @param {string} key 
- * @param {string} value 
- * @param {number} timestamp
- * @return {void}
- */
+* @param {string} key 
+* @param {string} value 
+* @param {number} timestamp
+* @return {void}
+*/
 TimeMap.prototype.set = function(key, value, timestamp) {
-  if (this.map.has(key)) {
-    this.map.get(key).set(timestamp, value)
-  } else {
-    let valueMap = new Map()
-    valueMap.set(timestamp, value)
-    this.map.set(key, valueMap)
+  if (!this.map[key]) {  
+    this.map[key] = []
   }
-};
+  this.map[key].push({
+    value,
+    timestamp
+  })
+}
+
+TimeMap.prototype.binarySearch = function (arr, targetTimestamp, start, end, bestValue) {      
+  // return value
+  if (start > end) {
+    return bestValue
+  }
+
+  const mid = start + Math.floor((end - start) / 2)
+  const curTimestamp = arr[mid].timestamp
+  const curValue = arr[mid].value
+
+  // we need smaller numbers
+  if (curTimestamp > targetTimestamp) {
+    return this.binarySearch(arr, targetTimestamp, start, mid - 1, bestValue)
+  }
+
+  // smaller timestamp is found, save the value.
+  if (curTimestamp < targetTimestamp) {
+    return this.binarySearch(arr, targetTimestamp, mid + 1, end, curValue)
+  }
+
+  // exact timestamp is found, no need for this if but we want to be descriptive
+  if (curTimestamp === targetTimestamp) {
+    return curValue
+  }
+}
+
 
 /** 
- * @param {string} key 
- * @param {number} timestamp
- * @return {string}
- */
+* @param {string} key 
+* @param {number} timestamp
+* @return {string}
+*/
 TimeMap.prototype.get = function(key, timestamp) {
-  if (!this.map.has(key)) return null
-  let valueMap = this.map.get(key)
-  let timestamp = valueMap.keys()[0]
-  let value = valueMap.values()[0]
-  return value
-};
+  if (!key in this.map) {
+    return ''
+  }
+
+  let arr = this.map[key]
+  return this.binarySearch(arr, timestamp, 0, arr.length - 1, '')
+}
 
 /** 
  * Your TimeMap object will be instantiated and called as such:
