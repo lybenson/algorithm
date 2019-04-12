@@ -15,28 +15,35 @@ var pacificAtlantic = function(matrix) {
   let m = matrix[0].length
   let n = matrix.length
 
-  let p = []
-  let a = []
-  for (let x = 0; x < m; x++) {
-    dfs(x, 0, 0, p)
-    dfs(x, n - 1, 0, a)
+  let p = (new Array(n)).fill((new Array(m)))
+  let a = (new Array(n)).fill((new Array(m)))
+  
+  for (let x = 0; x < m; ++x) {
+    dfs(x, 0, 0, p)  // top
+    dfs(x, n - 1, 0, a) // bottom
   }
-  for (let y = 0; y < n; y++) {
-    dfs(0, y, 0, p)
-    dfs(m - 1, y, 0, a)
+  
+  for (let y = 0; y < n; ++y) {
+    dfs( 0, y, 0, p)  // left
+    dfs(m - 1, y, 0, a) // right
+  } 
+  let ans = []
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < m; j++) {
+      if(p[i][j] && a[i][j]) {
+        ans.push([i, j])
+      }
+    }
   }
+  return ans
 
   function dfs (x, y, h, v) {
-    if (x < 0 || y < 0 || x === matrix[0].length || y === matrix.length) {
-      return
-    }
-    if (v[y][x] || b[y][x]) {
-      return
-    }
+    if (x < 0 || y < 0 || x == matrix[0].length || y == matrix.length) return
+    if (v[y][x] || matrix[y][x] < h) return
     v[y][x] = true
-    dfs(x + 1, y, b[y][x], v)
-    dfs(x - 1, y, b[y][x], v)
-    dfs(x, y + 1, b[y][x], v)
-    dfs(x, y - 1, b[y][x], v)
+    dfs(x + 1, y, matrix[y][x], v)
+    dfs(x - 1, y, matrix[y][x], v)
+    dfs(x, y + 1, matrix[y][x], v)
+    dfs(x, y - 1, matrix[y][x], v)
   }
 };
