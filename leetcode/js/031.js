@@ -19,13 +19,17 @@ var nextPermutation = function(nums) {
   if (!nums || nums.length === 0) return nums
   let smallPos = -1
   let len = nums.length
-  for (let i = len - 2; i < nums.length; i++) {
+  for (let i = len - 2; i >= 0; i--) {
     if (nums[i] < nums[i + 1]) {
       smallPos = i
       break
     }
   }
-  if (smallPos === -1) reverse(nums, 0, nums.length - 1)
+
+  if (smallPos === -1) {
+    reverse(0, nums.length - 1)
+    return nums
+  }
 
   let largePos = -1
   for (let i = len - 1; i > smallPos; i--) {
@@ -34,19 +38,22 @@ var nextPermutation = function(nums) {
       break
     }
   }
-  swap(nums, smallPos, largePos)
-  reverse(nums, smallPos + 1, nums.length - 1)
+  
+  swap(smallPos, largePos)
+  reverse(smallPos + 1, nums.length - 1)
 
   return nums
-};
 
-function reverse (nums, i, j) {
-  while (i < j) {
-    swap(nums, i++, j--)
+  function reverse (i, j) {
+    while (i < j) {
+      swap(i, j)
+      i++
+      j--
+    }
   }
-}
-function swap(nums, i, j) {
-  let temp = nums[i]
-  nums[i++] = nums[j]
-  nums[j--] = temp
-}
+  function swap(i, j) {
+    let temp = nums[i]
+    nums[i++] = nums[j]
+    nums[j--] = temp
+  }
+};
