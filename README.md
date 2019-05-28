@@ -7,7 +7,6 @@
 - [x] 数据结构和算法
 - [x] leetcode
 
-
 #### 数据结构和算法
 
 - [列表](https://github.com/lybenson/algorithm/blob/master/dataStructure/list/list.js)
