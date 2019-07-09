@@ -20,7 +20,7 @@ var lengthOfLongestSubstring = function(s) {
     const len = s.length;
     for(let i = 0; i < len; i++) {
       let char = s.charAt(i)
-      var index = str.indexOf(char)
+      let index = str.indexOf(char)
       if(index === -1) {
         str += char
         size = size < str.length ? str.length : size
@@ -30,4 +30,3 @@ var lengthOfLongestSubstring = function(s) {
     }
     return size
 };
- 

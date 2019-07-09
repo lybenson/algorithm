@@ -23,57 +23,32 @@ nums2 = [3, 4]
  * @return {number}
  */
 var findMedianSortedArrays = function (nums1, nums2) {
-  if (nums1.length == 0 || nums2.length == 0) {
-    if ((nums1.length + nums2.length) % 2 == 1) {
-      const index = parseInt((nums1.length + nums2.length) / 2)
-      return nums2.length == 0 ? nums1[index] : nums2[index]
-    } else {
-      let nums = nums2.length == 0 ? nums1 : nums2
-      const index = nums.length / 2
-      return (nums[index - 1] + nums[index]) / 2
-    }
+  let n1 = nums1.length
+  let n2 = nums2.length
+  if (n1 > n2) {
+    return findMedianSortedArrays(nums2, nums1)
   }
+  let middle = parseInt((n1 + n2 + 1) / 2)
+  
+  let left = 0
+  let right = n1
+  while (left < right) {
+    let m1 = parseInt(left + (right - left) / 2)
+    let m2 = middle - m1
+    if (nums1[m1] < nums2[m2 - 1])
+      left = m1 + 1
+    else
+      right = m1
+  }
+  let m1 = left
+  let m2 = middle - left
 
-  if (nums1.length > nums2.length) {
-    swap(nums1, nums2)
+  let  med1= Math.max(m1 <= 0 ? -Number.MAX_VALUE : nums1[m1 - 1], m2 <= 0 ? -Number.MAX_VALUE : nums2[m2 - 1])
+
+  if ((n1 + n2) % 2 === 1) {
+    return med1
   }
-  const M = nums1.length, N = nums2.length
-  let min = 0, max = M, half = parseInt((M + N + 1) / 2) // 连个数组合并的中间值
-  while (min <= max) {
-    let i = parseInt((min + max) / 2) // nums1 的索引值
-    let j = half - i // num2 的索引值
-    if (i < max && nums2[j - 1] > nums1[i]) {
-      min++
-    } else if (i > min && nums1[i - 1] > nums2[j]) {
-      max--
-    } else {
-      let maxLeft = 0
-      if (i == 0) {
-        maxLeft = nums2[j - 1]
-      } else if (j == 0) {
-        maxLeft = nums1[i - 1]
-      } else {
-        maxLeft = Math.max(nums1[i - 1], nums2[j - 1])
-      }
-      if ((M + N) % 2 == 1) {
-        return maxLeft
-      }
-      let minRight = 0
-      if (i == M) {
-        minRight = nums2[j]
-      } else if (j == N) {
-        minRight = nums1[i]
-      } else {
-        minRight = Math.min(nums1[i], nums2[j])
-      }
-      return (maxLeft + minRight) / 2
-    }
-  }
-  return 0
+  let med2 = Math.min(m1 >= n1 ? Number.MAX_VALUE : nums1[m1], m2 >= n2 ? Number.MAX_VALUE : nums2[m2])
+  return (med1 + med2) * 0.5;
 };
 
-function swap(a, b) {
-  let tmp = a
-  a = b
-  b = tmp
-}
