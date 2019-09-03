@@ -31,8 +31,7 @@ var combinationSum = function(candidates, target) {
 
   function dfs (start, target, path) {
     if (target === 0) {
-      let ans_item = [...path]
-      ans.push(ans_item)
+      ans.push([...path])
       return
     }
     for (let i = start; i < len; i++) {
