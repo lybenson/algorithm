@@ -22,24 +22,24 @@ candidates 中的数字可以无限制重复被选取
  */
 var combinationSum = function(candidates, target) {
   // 回溯法
-  candidates = candidates.sort()
-  let ans = []
-  let cur = []
+  candidates = candidates.sort((a, b) => a - b)
 
-  dfs(target, 0, cur, ans)
+  let ans = []
+  let len = candidates.length
+  dfs(0, target, [])
   return ans
-  
-  function dfs (target, s, cur, ans) {
+
+  function dfs (start, target, path) {
     if (target === 0) {
-      let ans_item = [...cur]
+      let ans_item = [...path]
       ans.push(ans_item)
       return
     }
-    for (let i = s; i < candidates.length; i++) {
+    for (let i = start; i < len; i++) {
       if (candidates[i] > target) break
-      cur.push(candidates[i])
-      dfs(target - candidates[i], i, cur, ans)
-      cur.pop()
+      path.push(candidates[i])
+      dfs(i, target - candidates[i], path)
+      path.pop()
     }
   }
 };
