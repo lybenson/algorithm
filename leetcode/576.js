@@ -12,17 +12,34 @@ var findPaths = function(m, n, N, i, j) {
   // 看成从边界出发 dp[i][j] 是指在特定的移动次数下，可达到 (i,j) 位置的方式数
   let mod = 1000000007
 
-  let array_n = new Array(n).fill(1)
-  let array_m = new Array(m).fill(array_n)
-  let dp = new Array(N).fill(array_m)
+  let array_n = new Array(n).fill(0)
+  let dp = new Array(m).fill(array_n)
 
-  console.log(dp);
-  
-  for (let time = 1; time < N; t++) {
-    for (let y = 1; y < m; y++) {
-      for (let x = 0; x < n; n++) {
-        dp[time][y][x] = dp[time - 1][y - 1][x] + dp[time - 1][y + 1][x] + dp[time - 1][y][x - 1] + dp[time - 1][y][x + 1]
+  let dirs = [-1, 0, 1, 0, -1]
+  for (let time = 1; time <= N; time++) {
+    let array_n = new Array(n).fill(0)
+    let array_m = new Array(m).fill(array_n)
+    for (let y = 0; y < m; y++) {
+      for (let x = 0; x < n; x++) {
+        if (x === 0 || y === 0 || x === n - 1 || y === m - 1) {
+          array_m[y][x] += 1
+        }
+        if (y + 1 < m) {
+          array_m[y][x] += dp[y + 1][x]
+        }
+        if (y - 1 >= 0) {
+          array_m[y][x] += dp[y - 1][x]
+        }
+        if (x + 1 < n) {
+          array_m[y][x] += dp[y][x + 1]
+        }
+        if (x - 1 >= 0) {
+          array_m[y][x] += dp[y][x - 1]
+        }
       }
     }
+    console.log(array_m)
+    dp = [...array_m]
   }
-};
+  return dp[i][j]
+}
