@@ -9,33 +9,39 @@
  * @return {number}
  */
 var findPaths = function(m, n, N, i, j) {
+  // 通常是3维DP，降低复杂度可以使用记忆化DP, 记录上一步的的DP结果
   // 看成从边界出发 dp[i][j] 是指在特定的移动次数下，可达到 (i,j) 位置的方式数
   let mod = 1000000007
 
   let array_n = new Array(n).fill(0)
   let dp = new Array(m).fill(array_n)
 
-  let dirs = [-1, 0, 1, 0, -1]
   for (let time = 1; time <= N; time++) {
     let array_n = new Array(n).fill(0)
     let array_m = new Array(m).fill(array_n)
     for (let y = 0; y < m; y++) {
       for (let x = 0; x < n; x++) {
-        if (x === 0 || y === 0 || x === n - 1 || y === m - 1) {
-          array_m[y][x] += 1
-        }
-        if (y + 1 < m) {
-          array_m[y][x] += dp[y + 1][x]
-        }
-        if (y - 1 >= 0) {
-          array_m[y][x] += dp[y - 1][x]
-        }
-        if (x + 1 < n) {
-          array_m[y][x] += dp[y][x + 1]
-        }
-        if (x - 1 >= 0) {
-          array_m[y][x] += dp[y][x - 1]
-        }
+        if (x === 0) array_m[y][x] += 1
+        if (y === 0) array_m[y][x] += 1
+        if (x === n - 1) array_m[y][x] += 1
+        if (y === m - 1) array_m[y][x] += 1
+
+        array_m[y][x] = dp[y][x + 1] + dp[y][x - 1] + dp[y + 1][x] + dp[y - 1][x]
+        // if (x === 0 || y === 0 || x === n - 1 || y === m - 1) {
+        //   array_m[y][x] += 1
+        // }
+        // if (y + 1 < m) {
+        //   array_m[y][x] += dp[y + 1][x]
+        // }
+        // if (y - 1 >= 0) {
+        //   array_m[y][x] += dp[y - 1][x]
+        // }
+        // if (x + 1 < n) {
+        //   array_m[y][x] += dp[y][x + 1]
+        // }
+        // if (x - 1 >= 0) {
+        //   array_m[y][x] += dp[y][x - 1]
+        // }
       }
     }
     console.log(array_m)
@@ -43,3 +49,5 @@ var findPaths = function(m, n, N, i, j) {
   }
   return dp[i][j]
 }
+
+console.log(findPaths(2, 2, 2, 0, 0));
