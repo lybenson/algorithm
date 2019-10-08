@@ -1,16 +1,6 @@
-/*
-给定两个非空链表来表示两个非负整数。位数按照逆序方式存储，它们的每个节点只存储单个数字。将两数相加返回一个新的链表。
-
-你可以假设除了数字 0 之外，这两个数字都不会以零开头。
-
-示例：
-
-输入：(2 -> 4 -> 3) + (5 -> 6 -> 4)
-输出：7 -> 0 -> 8
-原因：342 + 465 = 807
-*/
-
-
+/**
+ * 给定两个非空链表来代表两个非负整数。数字最高位位于链表开始位置。它们的每个节点只存储单个数字。将这两数相加会返回一个新的链表。
+ */
 /**
  * Definition for singly-linked list.
  * function ListNode(val) {
@@ -23,7 +13,19 @@
  * @param {ListNode} l2
  * @return {ListNode}
  */
+var reverseList = function (head) {
+  let pre = null
+  while (head) {
+    let next = head.next
+    head.next = pre
+    pre = head
+    head = next
+  }
+  return pre
+}
 var addTwoNumbers = function(l1, l2) {
+  l1 = reverseList(l1)
+  l2 = reverseList(l2)
   let dummy = new ListNode(0)
   let cur = dummy
   let carryBit = 0
@@ -42,6 +44,5 @@ var addTwoNumbers = function(l1, l2) {
   if (carryBit === 1) {
     cur.next = new ListNode(1)
   }
-  return dummy.next
+  return reverseList(dummy.next)
 };
-
