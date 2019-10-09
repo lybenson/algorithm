@@ -20,7 +20,6 @@ var flatten = function(head) {
   let node = head
   while (node) {
     let child = node.child
-    let next = node.next
     if (!child) {
       node = node.next
       continue
