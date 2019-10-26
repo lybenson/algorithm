@@ -34,9 +34,11 @@ var solveSudoku = function(board) {
   }
   fillNumber(board, 0, 0)
 
+  // x 表示横坐标即列的索引， y表示纵坐标即行的索引
   function fillNumber(board, x, y) {
     if (y === 9) return true
-  
+
+    // 按行回溯
     let next_x = (x + 1) % 9
     let next_y = next_x === 0 ? y + 1 : y
     if (board[y][x] !== '.') {
@@ -60,6 +62,4 @@ var solveSudoku = function(board) {
     }
     return false
   }
-};
-
-
+}
