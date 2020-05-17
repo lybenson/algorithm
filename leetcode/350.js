@@ -8,8 +8,18 @@
  */
 var intersect = function(nums1, nums2) {
   let ans = []
+  let numsMap = new Map()
   for (let i = 0; i < nums1.length; i++) {
-    nums2.includes(nums1[i]) && ans.push(...nums2.splice(nums2.indexOf(nums1[i]), 1))
+    let num = nums1[i]
+    numsMap.has(num) ? numsMap.set(num, numsMap.get(num) + 1) : numsMap.set(num, 1)
+  }
+  for (let i = 0; i < nums2.length; i++) {
+    let num = nums2[i]
+    if (numsMap.has(num) && numsMap.get(num) > 0) {
+      ans.push(num)
+
+      numsMap.set(num, numsMap.get(num) - 1)
+    }
   }
   return ans
 };
