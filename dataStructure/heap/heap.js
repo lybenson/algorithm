@@ -54,10 +54,10 @@ function heap_sort (array, length) {
   }
 }
 
-let arr = [9, 3, 2, 5, 8, 5]
-console.log(arr)
-heapify(arr, 6, 0)
-console.log(arr)
+// let arr = [9, 3, 2, 5, 8, 5]
+// console.log(arr)
+// heapify(arr, 6, 0)
+// console.log(arr)
 
 // heap_sort(arr, 4, 0)
 // console.log(arr)
