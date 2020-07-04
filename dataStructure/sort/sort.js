@@ -8,7 +8,7 @@
 function bubbleSort(arr) {
   var len = arr.length;
   for (var i = 0; i < len; i++) {
-    console.log(`第${i}轮`)
+    console.log(`第${i}轮， 每轮都会把最大的数放在右边`)
     for (var j = 0; j < len - 1 - i; j++) {
       if (arr[j] > arr[j+1]) { // 升序
         var temp = arr[j+1];
@@ -28,13 +28,15 @@ function bubbleSort(arr) {
  */
 function quickSort(arr, left, right) {
   if (left < right) {
-    var x = arr[right], i = left - 1, temp;
-    for (var j = left; j <= right; j++) {
-      if (arr[j] <= x) {
-        i++;
-        temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
+    // 选取最右边的数字为基准值
+    let base = arr[right]
+    let i = left - 1
+    for (let j = left; j <= right; j++) {
+      if (arr[j] <= base) {
+        i++
+        let temp = arr[i]
+        arr[i] = arr[j]
+        arr[j] = temp
       }
     }
     quickSort(arr, left, i - 1);
@@ -42,6 +44,8 @@ function quickSort(arr, left, right) {
   }
 　return arr;
 }
+
+// 插入排序
 
 // 选择排序
 
