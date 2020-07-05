@@ -5,26 +5,36 @@
  * @return {number}
  */
 var maximalSquare = function(matrix) {
+  // 该方式创建的二维数组其内部每个数组元素的地址相同
+  // let dp = new Array(m + 1).fill(new Array(n + 1))
+
+  if (!matrix || matrix.length === 0) return 0
   let m = matrix.length
   let n = matrix[0].length
 
-  let dp = new Array(m).fill(new Array(n).fill(0))
-  console.log(dp)
-  for (let i = 0; i < m; i++) {
-    for (let j = 0; j < n; j++) {
-      dp[i][j] = matrix[i][j]
-      if (dp[i][j] === 0) continue
-      if (i ===0 && j === 0) {
+  let dp = []
+  for (let i = 0; i <= m; i++) {
+    let arr = new Array()
+    for (let j = 0; j <= n; j++) {
+      arr.push(0)
+    }
+    dp.push(arr)
+  }
 
-      } else if (i === 0) {
-
-      } else if (j === 0) {
-
-      } else {
-        
+  let max = 0
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      if (matrix[i - 1][j - 1] === '1') {
+        dp[i][j] = Math.min(
+          dp[i - 1][j -1],
+          dp[i - 1][j],
+          dp[i][j - 1]
+        ) + 1
+        max = Math.max(max, dp[i][j])
       }
     }
   }
-  console.log(dp)
-  return dp[m - 1][n - 1]
+  return max * max
 };
+
+let res = maximalSquare([["1","0","1","0","0"],["1","0","1","1","1"],["1","1","1","1","1"],["1","0","0","1","0"]])
