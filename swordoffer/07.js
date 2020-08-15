@@ -14,37 +14,36 @@
  * @return {TreeNode}
  */
 var buildTree = function(preorder, inorder) {
-  if (preorder == null || preorder.length == 0) {
-      return null
+  if (!preorder || preorder.length === 0) {
+    return null
   }
-  let indexMap = new Map() // map 代替indexOf
-  let length = preorder.length;
+  let inMap = new Map()
+  let length = inorder.length
   for (let i = 0; i < length; i++) {
-      indexMap.set(inorder[i], i)
+    inMap.set(inorder[i], i)
   }
-  let root = buildTreeNode(preorder, 0, length - 1, inorder, 0, length - 1, indexMap)
 
-  return root
+  return buildTreeNode(preorder, 0, length - 1, inorder, 0, length - 1, inMap)
 }
 
-function buildTreeNode (preorder, preorderStart, preorderEnd, inorder, inorderStart, inorderEnd, indexMap) {
+function buildTreeNode (preorder, preorderStart, preorderEnd, inorder, inorderStart, inorderEnd, inMap) {
   if (preorderStart > preorderEnd) {
-      return null
+    return null
   }
-  let rootVal = preorder[preorderStart]
-  let root = new TreeNode(rootVal)
-  if (preorderStart == preorderEnd) {
-      return root
+  let rootValue = preorder[preorderStart]
+  let rootIndex = inMap.get(rootValue)
+
+  let root = new TreeNode(rootValue)
+  if (preorderStart === preorderEnd) {
+    return root
   } else {
-      let rootIndex = indexMap.get(rootVal)
-
-      let leftNodes = rootIndex - inorderStart // 左节点个数
-      let rightNodes = inorderEnd - rootIndex // 右节点个数
-
-      let leftSubtree = buildTreeNode(preorder, preorderStart + 1, preorderStart + leftNodes, inorder, inorderStart, rootIndex - 1, indexMap)
-      let rightSubtree = buildTreeNode(preorder, preorderEnd - rightNodes + 1, preorderEnd, inorder, rootIndex + 1, inorderEnd, indexMap)
-      root.left = leftSubtree
-      root.right = rightSubtree
-      return root
+    let leftNodeCount = rootIndex - inorderStart  // 左节点个数
+    let rightNodeCount = inorderEnd - rootIndex // 右节点个数
+  
+    root.left = buildTreeNode(preorder, preorderStart + 1, preorderStart + leftNodeCount, inorder, inorderStart, rootIndex - 1, inMap)
+  
+    root.right = buildTreeNode(preorder, preorderEnd - rightNodeCount + 1, preorderEnd, inorder, rootIndex + 1, inorderEnd, inMap)
+  
+    return root
   }
 }
