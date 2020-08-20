@@ -12,6 +12,8 @@ var exist = function(board, word) {
   if (board.length === 0) return false
   let h = board.length
   let w = board[0].length
+
+  // 遍历数组，找到开头的元素执行dfs
   for (let i = 0; i < w; i++) {
     for (let j = 0; j < h; j++) {
       if (search(0, i, j)) return true
@@ -27,6 +29,8 @@ var exist = function(board, word) {
     let char = board[y][x]
     board[y][x] = 0
     let isMatch = search(d + 1, x + 1, y) || search(d + 1, x - 1, y) || search(d + 1, x, y + 1) || search(d + 1, x, y - 1)
+
+    // 重置。有多个以word[0]开头的字母，不影响其他以word[0]开头的dfs
     board[y][x] = char
     return isMatch
   }

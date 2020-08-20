@@ -11,18 +11,28 @@ var numIslands = function(grid) {
   let n = grid[0].length
 
   let ans = 0
+
+  // 思路
+  // 双重循环遍历找到岛屿，并将其周围的岛屿去掉
+
   for (let y = 0; y < m; y++) {
     for (let x = 0; x < n; x++) {
-      if (grid[y][x] === 1) {
-        ans = Math.max(dfs(x, y), ans)
+      if (grid[y][x] === '1') {
+        // 为1则将其周围存在的导致置为0
+        ans++
+        dfs(x, y)
       }
     }
   }
+  console.log(grid)
   return ans
 
   function dfs(x, y) {
-    if (x < 0 || y < 0 || x >= n || y >= m || grid[y][x] === 0) return 0
-    grid[y][x] = 0
-    return dfs(x + 1, y) + dfs(x - 1, y) + dfs(x, y + 1) + dfs(x, y - 1) + 1
+    if (x < 0 || y < 0 || x >= n || y >= m || grid[y][x] === '0') return 0
+    grid[y][x] = '0'
+    dfs(x + 1, y)
+    dfs(x - 1, y)
+    dfs(x, y + 1)
+    dfs(x, y - 1)
   }
 };
