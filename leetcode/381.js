@@ -12,7 +12,8 @@ getRandom：从现有集合中随机获取一个元素。每个元素被返回�
  */
 
 var RandomizedCollection = function() {
-  this.map = new Map()
+  this.map = new Map() // key: set
+  this.vals = []
 };
 
 /**
@@ -21,7 +22,12 @@ var RandomizedCollection = function() {
  * @return {boolean}
  */
 RandomizedCollection.prototype.insert = function(val) {
-  this.map.set(val, val)
+  let count = this.vals.push(val)
+  if (!this.map.has(val)) {
+    this.map.set(val, new Set())
+  }
+  this.map.get(val).add(count - 1)
+  return this.map.get(val).size === 1
 };
 
 /**
@@ -30,7 +36,25 @@ RandomizedCollection.prototype.insert = function(val) {
  * @return {boolean}
  */
 RandomizedCollection.prototype.remove = function(val) {
-  this.map.remove(val)
+  if (!this.map.has(val) || this.map.get(val).size === 0) return false
+
+  let indexSet = this.map.get(val)
+
+  // 从set获取要删除元素的索引
+  let index = Array.from(indexSet)[0]
+  indexSet.delete(index)
+
+  let lastVal = this.vals[this.vals.length - 1]
+  this.vals[index] = lastVal
+
+  if (index !== this.vals.length - 1) {
+    const lastSet = this.map.get(lastVal)
+    lastSet.delete(this.vals.length - 1)
+    lastSet.add(index)
+  }
+  this.vals.pop()
+
+  return true
 };
 
 /**
@@ -38,9 +62,9 @@ RandomizedCollection.prototype.remove = function(val) {
  * @return {number}
  */
 RandomizedCollection.prototype.getRandom = function() {
-
+  let random = Math.floor((Math.random() * this.vals.length))
+  return this.vals[random]
 };
-
 /**
  * Your RandomizedCollection object will be instantiated and called as such:
  * var obj = new RandomizedCollection()
