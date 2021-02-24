@@ -10,12 +10,21 @@
  * @return {number[][]}
  */
 var flipAndInvertImage = function(A) {
-  A.forEach(a => {
-    a.reverse()
-    a.forEach((value, index) => {
-      if (value === 0) a[index] = 1
-      else a[index] = 0
-    })
-  })
+  let columns = A[0].length
+  let rows = A.length
+
+  for (let i = 0; i < rows; i++) {
+    let left = 0
+    let right = columns - 1
+
+    while(left < right) {
+      if (A[i][left] === A[i][right]) {
+        A[i][left] ^= 1
+        A[i][right] ^= 1
+      }
+      left++
+      right--
+    }
+  }
   return A
 };
