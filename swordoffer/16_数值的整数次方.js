@@ -1,11 +1,11 @@
 /**
- * 请实现一个函数，输入一个整数，输出该数二进制表示中 1 的个数。例如，把 9 表示成二进制是 1001，有 2 位是 1。因此，如果输入 9，则该函数输出 2。
+实现 pow(x, n) ，即计算 x 的 n 次幂函数（即，xn）。不得使用库函数，同时不需要考虑大数问题。
  */
 /**
- * @param {number} n - a positive integer
+ * @param {number} x
+ * @param {number} n
  * @return {number}
  */
-var hammingWeight = function(n) {
-  let s = n.toString(2)
-  console.log(s)
-}
+var myPow = function(x, n) {
+  return x << (n - 1)
+};
