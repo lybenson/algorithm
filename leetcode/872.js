@@ -14,19 +14,19 @@
  * @return {boolean}
  */
 var leafSimilar = function(root1, root2) {
-  let leafSequence1 = ''
-  let leafSequence2 = ''
-  dfs(root1, 1)
-  dfs(root2, 2)
-  return leafSequence1 === leafSequence2
-  function dfs(node, num) {
+  let leafSequence1 = []
+  let leafSequence2 = []
+  dfs(root1, leafSequence1)
+  dfs(root2, leafSequence2)
+
+  return leafSequence1.toString() === leafSequence2.toString()
+  function dfs(node, nums) {
     if (!node) return
     if (!node.left && !node.right) {
-      if (num === 1) leafSequence1 += node.val
-      else leafSequence2 += node.val
+      nums.push(node.val)
     } else {
-      dfs(node.left, num)
-      dfs(node.right, num)
+      dfs(node.left, nums)
+      dfs(node.right, nums)
     }
   }
 };

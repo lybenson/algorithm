@@ -14,19 +14,35 @@
  * @param {string} s
  * @return {number}
  */
+// var lengthOfLongestSubstring = function(s) {
+//     let size = 0 // 用于存放当前最长无重复子串的长度
+//     let str = '' // 用于存放无重复子串
+//     const len = s.length;
+//     for(let i = 0; i < len; i++) {
+//       let char = s.charAt(i)
+//       let index = str.indexOf(char)
+//       if(index === -1) {
+//         str += char
+//         size = size < str.length ? str.length : size
+//       } else {
+//         str = str.substr(index + 1) + char
+//       }
+//     }
+//     return size
+// };
+
 var lengthOfLongestSubstring = function(s) {
-    let size = 0 // 用于存放当前最长无重复子串的长度
-    let str = '' // 用于存放无重复子串
-    const len = s.length;
-    for(let i = 0; i < len; i++) {
-      let char = s.charAt(i)
-      let index = str.indexOf(char)
-      if(index === -1) {
-        str += char
-        size = size < str.length ? str.length : size
-      } else {
-        str = str.substr(index + 1) + char
-      }
+  let map = new Map()
+  let n = s.length
+  let start = 0
+  let ans = 0
+  for (let end = 0; end < n; end++) {
+    let char = s[end]
+    if (map.has(char)) {
+      start = Math.max(map.get(char) + 1, start)
     }
-    return size
+    ans = Math.max(ans, end - start + 1)
+    map.set(char, end)
+  }
+  return ans
 };

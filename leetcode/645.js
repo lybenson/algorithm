@@ -7,22 +7,38 @@
  * @param {number[]} nums
  * @return {number[]}
  */
-var findErrorNums = function(nums) {
-  let len = nums.length
-  let ans = []
+// var findErrorNums = function(nums) {
+//   let len = nums.length
+//   let ans = []
 
-  for (let i = 0; i < len; i++) {
-    let index = Math.abs(num[i]) - 1
-    if (nums[index] < 0) {
-      ans[0] = index + 1
-    } else {
-      nums[index] = -nums[index]
-    }
-  }
-  for (let i = 0; i < len; i++) {
-    if (nums[i] > 0) {
-      ans[1] = i + 1
-    }
+//   for (let i = 0; i < len; i++) {
+//     let index = Math.abs(num[i]) - 1
+//     if (nums[index] < 0) {
+//       ans[0] = index + 1
+//     } else {
+//       nums[index] = -nums[index]
+//     }
+//   }
+//   for (let i = 0; i < len; i++) {
+//     if (nums[i] > 0) {
+//       ans[1] = i + 1
+//     }
+//   }
+//   return ans
+// };
+
+var findErrorNums = function(nums) {
+  let n = nums.length
+  let cnts = new Array(n + 1).fill(0)
+  nums.forEach((num, i) => {
+    cnts[num]++
+  })
+  let ans = new Array(2)
+  for (let i = 1; i <= n; i++ ) {
+    if (cnts[i] === 0) ans[1] = i
+    if (cnts[i] === 2) ans[0] = i
   }
   return ans
 };
+
+findErrorNums([1,2,2,4])

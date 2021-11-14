@@ -13,22 +13,33 @@
  * @param {ListNode} head
  * @return {ListNode}
  */
+// var sortList = function(head) {
+  // if (!head || !head.next) 
+  //   return head
+
+  // let nodes = []
+  // while (head) {
+  //   let node = new ListNode(head.val)
+  //   nodes.push(node)
+  //   head = head.next
+  // }
+  // nodes.sort(function(a, b) {
+  //   return a.val - b.val
+  // })
+  // let len = nodes.length
+  // for (let i = 0; i < len - 1; i++)
+  //   nodes[i].next = nodes[i + 1]
+  // return nodes[0]
+// }
 var sortList = function(head) {
-  if (!head || !head.next) 
-    return head
-
-  let nodes = []
-  while (head) {
-    let node = new ListNode(head.val)
-    nodes.push(node)
-    head = head.next
+  let slow = head, fast = head
+  while (fast && fast.next) {
+    slow = slow.next
+    fast = fast.next.next
   }
-  nodes.sort(function(a, b) {
-    return a.val - b.val
-  })
-  let len = nodes.length
-  for (let i = 0; i < len - 1; i++)
-    nodes[i].next = nodes[i + 1]
+  let mid = slow.next
+  slow.next = null
 
-  return nodes[0]
+  let dummyNode = new ListNode(0)
 }
+sortList(100)

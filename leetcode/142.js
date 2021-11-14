@@ -17,13 +17,31 @@
  * @param {ListNode} head
  * @return {ListNode}
  */
+// 解法一
+// var detectCycle = function(head) {
+//   let set = new Set()
+//   let node = head
+//   while (node) {
+//     if (set.has(node)) return node
+//     set.add(node)
+//     node = node.next
+//   }
+//   return null
+// };
+// 解法二
 var detectCycle = function(head) {
-  let set = new Set()
-  let node = head
-  while (node) {
-    if (set.has(node)) return node
-    set.add(node)
-    node = node.next
+  let slow = head
+  let fast = head
+  while (true) {
+    if (!fast || !fast.next) return null
+    slow = slow.next
+    fast = fast.next.next
+    if (slow === fast) break
   }
-  return null
-};
+  fast = head
+  while (fast != slow) {
+    slow = slow.next
+    fast = fast.next
+  }
+  return slow
+}
