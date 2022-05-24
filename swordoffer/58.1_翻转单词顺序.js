@@ -6,5 +6,17 @@
  * @return {string}
  */
 var reverseWords = function(s) {
+  let start = 0
+  let end = 0
 
+  while(start < nums.length) {
+    if (nums[end] & 1) {
+
+      [nums[start], nums[end]] = [nums[end], nums[start]]
+      start++
+    }
+    end++
+  }
+
+  return nums
 };
